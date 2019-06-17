@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const startingBtns = [
   "motorcycle fail",
   "excited",
@@ -62,17 +60,18 @@ const gifAttach = (attachToEl, response, i, clas) => {
 // ***********************************************************
 
 // Gets value of button clicked and searchs for that type of gif.
-// const request = (search) => {
-//   $.ajax({
-//     url: `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=0&rating=PG-13&lang=en`,
-//     method: "GET",
-//   }).then((response) => {
-//     for (let i = 0; i < response.data.length; i += 1) {
-//       // const img = dataAssign(response, i);
-//       gifAttach(select("gif"), response, i, "gifDiv");
-//     }
-//   });
-// };
+const request = (search) => {
+  $.ajax({
+    url: `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=0&rating=PG-13&lang=en`,
+    method: "GET",
+  })
+    .then((response) => {
+      for (let i = 0; i < response.data.length; i += 1) {
+        gifAttach(select("gif"), response, i, "gifDiv");
+      }
+    })
+    .catch(error => console.error(error));
+};
 
 // const axios = require("axios");
 
@@ -82,15 +81,18 @@ const gifAttach = (attachToEl, response, i, clas) => {
 //   }
 // };
 
-const request = search => axios
-  .get(
-    `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=0&rating=PG-13&lang=en`,
-  )
-  .then((response) => {
-    for (let i = 0; i < response.data.length; i += 1) {
-      gifAttach(select("gif"), response, i, "gifDiv");
-    }
-  });
+// const request = (search) => {
+//   axios
+//     .get(
+//       `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=0&rating=PG-13&lang=en`,
+//     )
+//     .then((response) => {
+//       for (let i = 0; i < response.data.length; i += 1) {
+//         gifAttach(select("gif"), response, i, "gifDiv");
+//       }
+//     })
+//     .catch(error => console.error(error));
+// };
 
 const searchVal = (event) => {
   const searchTerm = event.target.value;
