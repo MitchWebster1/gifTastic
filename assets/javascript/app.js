@@ -1,16 +1,16 @@
 const startingBtns = [
-  "motorcycle fail",
+  "motorcycle stunts",
   "excited",
   "austin powers",
   "chuck norris",
   "fail",
   "dance",
   "treadmill",
-  "weightlifting",
+  "weightlifting fail",
 ];
 const select = id => document.getElementById(id);
 const createEl = el => document.createElement(el);
-// const random = offset => Math.floor(Math.random) * offset;
+const random = () => Math.floor(Math.random() * 50);
 
 // Creates new buttons based on input of textbox
 const attach = (div, text, attachToEl, clas) => {
@@ -54,15 +54,14 @@ const gifAttach = (attachToEl, response, i, clas) => {
   el.append(rating, img);
   el.className = clas;
   attachToEl.prepend(el);
-  // dataAssign(response, i);
 };
 
 // ***********************************************************
 
 // Gets value of button clicked and searchs for that type of gif.
-const request = (search) => {
+const request = (search, offset) => {
   $.ajax({
-    url: `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=0&rating=PG-13&lang=en`,
+    url: `https://api.giphy.com/v1/gifs/search?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&q=${search}&limit=10&offset=${offset}&rating=PG-13&lang=en`,
     method: "GET",
   })
     .then((response) => {
@@ -74,12 +73,6 @@ const request = (search) => {
 };
 
 // const axios = require("axios");
-
-// const responseData = (response) => {
-//   for (let i = 0; i < response.data.length; i += 1) {
-//     gifAttach(select("gif"), response, i, "gifDiv");
-//   }
-// };
 
 // const request = (search) => {
 //   axios
@@ -96,7 +89,9 @@ const request = (search) => {
 
 const searchVal = (event) => {
   const searchTerm = event.target.value;
-  request(searchTerm);
+  const offset = random();
+  request(searchTerm, offset);
+  console.log(offset);
 };
 
 select("btns").addEventListener("click", searchVal);
