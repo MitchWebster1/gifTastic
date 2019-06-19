@@ -15,7 +15,6 @@ const random = () => Math.floor(Math.random() * 50);
 // Used to empty the gifs out with a button click
 const empty = () => {
   const el = select("gif");
-  console.log(el);
   while (el.firstChild) {
     el.removeChild(el.firstChild);
   }
@@ -102,7 +101,6 @@ const searchVal = (event) => {
   const searchTerm = event.target.value;
   const offset = random();
   request(searchTerm, offset);
-  console.log(offset);
 };
 
 select("btns").addEventListener("click", searchVal);
