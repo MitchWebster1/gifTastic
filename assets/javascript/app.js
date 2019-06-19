@@ -12,6 +12,17 @@ const select = id => document.getElementById(id);
 const createEl = el => document.createElement(el);
 const random = () => Math.floor(Math.random() * 50);
 
+// Used to empty the gifs out with a button click
+const empty = () => {
+  const el = select("gif");
+  console.log(el);
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
+};
+
+select("emptyDiv").addEventListener("click", empty);
+
 // Creates new buttons based on input of textbox
 const attach = (div, text, attachToEl, clas) => {
   const el = createEl(div);
@@ -118,12 +129,23 @@ select("gif").addEventListener("click", stopStartGif);
 
 // ***************************************************
 
-// Creates buttons from array on page load
+// Creates buttons from array on page load / loads 10 trending gifs
 const start = () => {
   for (let i = 0; i < startingBtns.length; i += 1) {
     const text = startingBtns[i];
     attach("button", text, select("btns"), "btn");
   }
+  $.ajax({
+    url:
+      "https://api.giphy.com/v1/gifs/trending?api_key=FW6E7JrSMowL9qZhFstFGdSaEOVggJm3&limit=10&rating=PG-13",
+    method: "GET",
+  })
+    .then((response) => {
+      for (let i = 0; i < response.data.length; i += 1) {
+        gifAttach(select("gif"), response, i, "gifDiv");
+      }
+    })
+    .catch(error => console.error(error));
 };
 
 start();
